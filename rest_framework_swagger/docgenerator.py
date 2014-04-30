@@ -72,10 +72,6 @@ class DocumentationGenerator(object):
                 'type': response_type,
             }
 
-            if doc_parser.yaml_error is not None:
-                operation['notes'] += "<pre>YAMLError:\n {err}</pre>".format(
-                    err=doc_parser.yaml_error)
-
             response_messages = doc_parser.get_response_messages()
             parameters = doc_parser.discover_parameters(
                 inspector=method_introspector)
@@ -85,6 +81,21 @@ class DocumentationGenerator(object):
 
             if response_messages:
                 operation['responseMessages'] = response_messages
+
+            # override operation from callback's docstring
+            callback_doc_parser = YAMLDocstringParser(docstring=callback.__doc__)
+            if method_introspector.method in callback_doc_parser.object:
+                overrides = callback_doc_parser.object[method_introspector.method]
+                allowed_keys = {'method', 'summary', 'nickname', 'notes', 'type', 'parameters', 'responseMessages'}
+                if isinstance(overrides, dict):
+                    for key, value in overrides.items():
+                        if key in allowed_keys:
+                            operation[key] = value
+
+            for parser in [doc_parser, callback_doc_parser]:
+                if parser.yaml_error is not None:
+                    operation['notes'] += "<pre>YAMLError:\n {err}</pre>".format(
+                        err=parser.yaml_error)
 
             operations.append(operation)
 
