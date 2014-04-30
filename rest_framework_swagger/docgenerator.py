@@ -84,8 +84,9 @@ class DocumentationGenerator(object):
 
             # override operation from callback's docstring
             callback_doc_parser = YAMLDocstringParser(docstring=callback.__doc__)
-            if method_introspector.method in callback_doc_parser.object:
-                overrides = callback_doc_parser.object[method_introspector.method]
+            method = method_introspector.method.lower()
+            if method in callback_doc_parser.object:
+                overrides = callback_doc_parser.object[method]
                 allowed_keys = {'method', 'summary', 'nickname', 'notes', 'type', 'parameters', 'responseMessages'}
                 if isinstance(overrides, dict):
                     for key, value in overrides.items():
