@@ -7,6 +7,7 @@ from rest_framework.serializers import BaseSerializer
 from .introspectors import APIViewIntrospector, \
     ViewSetIntrospector, BaseMethodIntrospector, IntrospectorHelper, \
     get_resolved_value, YAMLDocstringParser
+from . import SWAGGER_SETTINGS
 
 
 class DocumentationGenerator(object):
@@ -50,7 +51,8 @@ class DocumentationGenerator(object):
 
         for method_introspector in introspector:
             if not isinstance(method_introspector, BaseMethodIntrospector) or \
-                    method_introspector.get_http_method() == "OPTIONS":
+                    method_introspector.get_http_method() == "OPTIONS" or \
+                    method_introspector.get_http_method().lower() not in SWAGGER_SETTINGS['enabled_methods']:
                 continue  # No one cares. I impose JSON.
 
             doc_parser = YAMLDocstringParser(
