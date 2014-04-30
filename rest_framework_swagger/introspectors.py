@@ -2,6 +2,7 @@
 
 import inspect
 import re
+import itertools
 import yaml
 import importlib
 
@@ -520,7 +521,7 @@ class YAMLDocstringParser(object):
         yaml_string = formatting.dedent(yaml_string)
         try:
             return yaml.load(yaml_string)
-        except yaml.YAMLError, e:
+        except yaml.YAMLError as e:
             self.yaml_error = e
             return None
 
@@ -754,7 +755,7 @@ class YAMLDocstringParser(object):
         Merges parameters lists by key
         """
         merged = OrderedDict()
-        for item in params1 + params2:
+        for item in itertools.chain(params1, params2):
             merged[item[key]] = item
 
         return [val for (_, val) in merged.items()]
