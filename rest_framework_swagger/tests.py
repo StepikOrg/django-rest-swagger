@@ -1,4 +1,5 @@
 import datetime
+from importlib import import_module
 
 from django.core.urlresolvers import RegexURLResolver
 from django.conf import settings
@@ -7,7 +8,6 @@ from django.contrib.auth.models import User
 from django.contrib.admindocs.utils import trim_docstring
 from django.http import HttpRequest
 from django.test import TestCase
-from django.utils.importlib import import_module
 from django.views.generic import View
 
 from rest_framework.views import APIView
