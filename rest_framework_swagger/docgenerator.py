@@ -3,6 +3,7 @@ import rest_framework
 from rest_framework import viewsets
 from rest_framework.serializers import BaseSerializer
 
+from . import SWAGGER_SETTINGS
 from .introspectors import APIViewIntrospector, \
     WrappedAPIViewIntrospector, \
     ViewSetIntrospector, BaseMethodIntrospector, IntrospectorHelper, \
@@ -60,7 +61,8 @@ class DocumentationGenerator(object):
 
         for method_introspector in introspector:
             if not isinstance(method_introspector, BaseMethodIntrospector) or \
-                    method_introspector.get_http_method() == "OPTIONS":
+                    method_introspector.get_http_method() == "OPTIONS" or \
+                    method_introspector.get_http_method().lower() not in SWAGGER_SETTINGS['enabled_methods']:
                 continue  # No one cares. I impose JSON.
 
             doc_parser = method_introspector.get_yaml_parser()
