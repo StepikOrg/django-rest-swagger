@@ -1,4 +1,4 @@
-VERSION = '0.3.3a3'
+VERSION = '0.3.3a4'
 
 DEFAULT_SWAGGER_SETTINGS = {
     'exclude_namespaces': [],
