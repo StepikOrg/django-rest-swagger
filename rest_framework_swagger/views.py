@@ -77,7 +77,7 @@ class SwaggerUIView(View):
             return False
 
         if rfs.SWAGGER_SETTINGS.get('is_authenticated') and \
-                not request.user.is_authenticated():
+                not request.user.is_authenticated:
             return False
 
         return True

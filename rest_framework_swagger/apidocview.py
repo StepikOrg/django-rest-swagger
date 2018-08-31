@@ -16,7 +16,7 @@ class APIDocView(APIView):
     def get_permission_class(self, request):
         if SWAGGER_SETTINGS['is_superuser'] and not request.user.is_superuser:
             return IsAdminUser
-        if SWAGGER_SETTINGS['is_authenticated'] and not request.user.is_authenticated():
+        if SWAGGER_SETTINGS['is_authenticated'] and not request.user.is_authenticated:
             return IsAuthenticated
 
         return AllowAny
