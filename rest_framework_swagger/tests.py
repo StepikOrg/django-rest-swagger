@@ -2,7 +2,7 @@ import datetime
 from mock import patch
 from distutils.version import StrictVersion
 
-from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
+from django.urls import RegexURLResolver, RegexURLPattern
 from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib.auth.models import User

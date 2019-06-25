@@ -4,7 +4,7 @@ from importlib import import_module
 
 from django.conf import settings
 from django.utils import six
-from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
+from django.urls import RegexURLResolver, RegexURLPattern
 from django.contrib.admindocs.views import simplify_regex
 
 from rest_framework.views import APIView
