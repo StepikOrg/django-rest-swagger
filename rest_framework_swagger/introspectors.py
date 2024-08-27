@@ -25,7 +25,10 @@ try:
     import django_filters
 except ImportError:
     django_filters = None
-
+try:
+    from yaml import full_load as yaml_load
+except ImportError:
+    from yaml import load as yaml_load
 
 def get_view_description(view_cls, html=False, docstring=None):
     if docstring is not None:
@@ -848,7 +851,7 @@ class YAMLDocstringParser(object):
         yaml_string = "\n".join(split_lines[cut_from:])
         yaml_string = formatting.dedent(yaml_string)
         try:
-            return yaml.load(yaml_string)
+            return yaml_load(yaml_string)
         except yaml.YAMLError as e:
             self.yaml_error = e
             return None
